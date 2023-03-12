@@ -1,0 +1,126 @@
+const quizData = {
+    "title": "Quiz 1",
+    "questions": [
+        {
+            "text": "Question 1",
+            "answers": [
+                {"text": "Answer 1", "is_correct": false},
+                {"text": "Answer 2", "is_correct": true},
+                {"text": "Answer 3", "is_correct": false}
+            ]
+        },
+        {
+            "text": "Question 2",
+            "answers": [
+                {"text": "Answer 1", "is_correct": false},
+                {"text": "Answer 2", "is_correct": false},
+                {"text": "Answer 3", "is_correct": true}
+            ]
+        }
+    ]
+};
+
+const quizElement = document.getElementById('quiz');
+const quizTitleElement = document.getElementById('quiz-title');
+const questionsElement = document.getElementById('questions');
+const submitButton = document.getElementById('submit');
+let score = 0;
+
+quizTitleElement.innerText = quizData.title;
+
+quizData.questions.forEach((question, index) => {
+    const questionElement = document.createElement('div');
+    questionElement.innerHTML = `<h3>${question.text}</h3>`;
+    const answersElement = document.createElement('ul');
+    question.answers.forEach((answer) => {
+        const answerElement = document.createElement('li');
+        answerElement.innerText = answer.text;
+        answerElement.addEventListener('click', () => {
+            if (!answerElement.classList.contains('selected')) {
+                answerElement.classList.add('selected');
+                answerElement.parentNode.childNodes.forEach((li) => {
+                    if (li.classList && li !== answerElement) {
+                        li.classList.remove('selected');
+                    }
+                });
+            }
+        });
+        answersElement.appendChild(answerElement);
+    });
+    questionElement.appendChild(answersElement);
+    questionsElement.appendChild(questionElement);
+});
+
+submitButton.addEventListener('click', () => {
+    quizData.questions.forEach((question, index) => {
+        const selectedAnswer = questionsElement.childNodes[index].querySelector('.selected');
+        if (selectedAnswer) {
+            if (question.answers[selectedAnswer.dataset.index].is_correct) {
+                score++;
+                selectedAnswer.classList.add('selected-correct');
+            } else {
+                selectedAnswer.classList.add('incorrect');
+                question.answers.forEach((answer, index) => {
+                    if (answer.is_correct) {
+                        questionsElement.childNodes[index].childNodes.forEach((li) =>
+
+
+
+
+css
+
+body {
+    font-family: sans-serif;
+}
+
+#quiz {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+#questions {
+    text-align: left;
+}
+
+li {
+    list-style-type: none;
+    margin-bottom: 10px;
+}
+
+.selected {
+    background-color: #ddd;
+}
+
+.correct {
+    background-color: #aaffaa;
+}
+
+.selected-correct {
+    background-color: #aaffaa;
+}
+
+
+
+html
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz App</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="quiz">
+        <h1>Quiz App</h1>
+        <h2 id="quiz-title"></h2>
+        <div id="questions"></div>
+        <button id="submit">Submit</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
