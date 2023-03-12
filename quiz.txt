@@ -67,7 +67,7 @@ submitButton.addEventListener('click', () => {
 
 
 
-css
+Cascading Style Sheet
 
 body {
     font-family: sans-serif;
